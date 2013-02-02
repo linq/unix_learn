@@ -25,7 +25,7 @@ struct utmp_list *log_in(struct utmp*, struct utmp_list *);
 struct utmp_list *log_out(struct utmp*, struct utmp_list *);
 
 int  main(int argc, char *argv[]) {
-  struct utmp_list *lp, *head;
+  struct utmp_list *lp, *head = NULL;
   struct utmp *utp;
 
   if (utmp_open(WTMP_FILENAME) == -1) {
@@ -35,9 +35,9 @@ int  main(int argc, char *argv[]) {
 
   while ((utp = utmp_next()) != NULL) {
     if (utp->ut_type == USER_PROCESS) {
-      log_in(utp, head);
+      head = log_in(utp, head);
     } else if (utp->ut_type == DEAD_PROCESS) {
-      log_out(utp, head);
+      head = log_out(utp, head);
     }
   }
 
@@ -66,9 +66,14 @@ struct utmp_list *log_out(struct utmp* up, struct utmp_list * head) {
       update_user(Users, lp->usr.ut_user, secs);
       tlp = lp;
       lp = lp->next;
+      if (tlp == head)
+        head = tlp;
       free(tlp);
+    } else {
+      lp = lp->next;
     }
-  }
+  }  
+
   return head;
 }
 
@@ -91,6 +96,6 @@ struct user_list *update_user(struct user_list *head, char *name, time_t secs) {
   strncpy(up->name, name, sizeof(up->name));
   up->secs = secs;
   Total += secs;
-  
+
   return up;
 }
