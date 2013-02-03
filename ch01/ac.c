@@ -43,7 +43,7 @@ int  main(int argc, char *argv[]) {
 
   utmp_close();
 
-  printf("The total time is %ld\n", Total);
+  printf("total %ld\n", Total/3600);
 
   return 0;
 }  // main
@@ -53,23 +53,26 @@ struct utmp_list *log_in(struct utmp* up, struct utmp_list * head) {
   lp->next = head;
   head = lp;
   memmove(&lp->usr, up, sizeof *up);
-  return lp;
+  return head;
 }
 
 
 struct utmp_list *log_out(struct utmp* up, struct utmp_list * head) {
   time_t secs;
-  struct utmp_list *lp, *tlp;
-  for (lp = head; lp != NULL;) {
+  struct utmp_list *lp, *lp2, *tlp;
+  for (lp = head, lp2 = NULL; lp != NULL;) {
     if (memcmp(lp->usr.ut_id, up->ut_id, sizeof up->ut_id) == 0) {
       secs = up->ut_tv.tv_sec - lp->usr.ut_tv.tv_sec;
       update_user(Users, lp->usr.ut_user, secs);
       tlp = lp;
       lp = lp->next;
       if (tlp == head)
-        head = tlp;
+        head = lp;
+      else if (lp2 != NULL)
+        lp2->next = lp;
       free(tlp);
     } else {
+      lp2 = lp; 
       lp = lp->next;
     }
   }  
