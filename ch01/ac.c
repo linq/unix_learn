@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <utmp.h>
 #include "utmplib.h"
+#include <stdbool.h>
 
 #define NEW(type) (type *)malloc(sizeof (type))
 
@@ -25,12 +26,30 @@ struct utmp_list *log_in(struct utmp*, struct utmp_list *);
 struct utmp_list *log_out(struct utmp*, struct utmp_list *);
 
 int  main(int argc, char *argv[]) {
+  int i;
+  bool d_flag, p_flag;
+  char *filename = WTMP_FILENAME;
   struct utmp_list *lp, *head = NULL;
   struct utmp *utp;
 
-  if (utmp_open(WTMP_FILENAME) == -1) {
-    fprintf(stderr, "open file %s error", WTMP_FILENAME);
+  if (utmp_open(filename) == -1) {
+    fprintf(stderr, "open file %s error", filename);
     exit(EXIT_FAILURE);
+  }
+
+  for (i = 1; i < argc; i++) {
+    if (argv[i][0] == '-') {
+      if (argv[i][1] == 'f')
+        filename = argv[i+1];
+      else if (argv[i][1] == 'd')
+        d_flag = true;
+      else if (argv[i][1] == 'p')
+        p_flag = true;
+      else {
+        sprintf(stderr, "argument error");
+        exit(EXIT_FAILURE);
+      }
+    }
   }
 
   while ((utp = utmp_next()) != NULL) {
