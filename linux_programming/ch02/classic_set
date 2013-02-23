@@ -1,0 +1,5 @@
+#!/bin/sh
+
+version=classic
+pp=tt
+PS1="classic> "

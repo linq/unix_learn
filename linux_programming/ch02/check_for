@@ -1,0 +1,9 @@
+#!/bin/sh
+
+for foo in bar fud 43
+do
+  printf "$foo "
+done
+echo
+
+exit 0

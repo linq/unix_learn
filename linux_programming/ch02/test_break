@@ -1,0 +1,18 @@
+#!/bin/sh
+
+rm -rf __fred*
+echo > __fred1
+echo > __fred2
+mkdir __fred3
+echo > __fred4
+
+for file in __fred*
+do
+  if [ -d "$file" ]; then
+    break;
+  fi
+done
+
+echo first directory starting __fred was $file
+rm -rf __fred*
+exit 0
