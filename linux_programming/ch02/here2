@@ -1,0 +1,9 @@
+#!/bin/sh
+
+sed a_text_file <<!FUNKY!
+3
+d
+.,\$/is/was
+w
+q
+!FUNKY!
