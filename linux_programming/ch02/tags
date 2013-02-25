@@ -1,0 +1,20 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+add_record_tracks	cd_db	/^add_record_tracks() {$/;"	f
+add_records	cd_db	/^add_records() {$/;"	f
+count_cds	cd_db	/^count_cds() {$/;"	f
+find_cd	cd_db	/^find_cd() {$/;"	f
+foo	test_function	/^foo() {$/;"	f
+get_confirm	cd_db	/^get_confirm() {$/;"	f
+get_return	cd_db	/^get_return() {$/;"	f
+insert_title	cd_db	/^insert_title() {$/;"	f
+insert_track	cd_db	/^insert_track() {$/;"	f
+list_tracks	cd_db	/^list_tracks() {$/;"	f
+remove_records	cd_db	/^remove_records() {$/;"	f
+set_menu_choice	cd_db	/^set_menu_choice() {$/;"	f
+update_cd	cd_db	/^update_cd() {$/;"	f
+yes_or_no	my_name	/^yes_or_no() {$/;"	f

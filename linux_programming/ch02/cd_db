@@ -187,10 +187,10 @@ update_cd() {
     echo
     echo "This will re-enter the tracks for $cdtitle"
     get_confirm && {
-    grep -v "^${cdcatnum}," $tracks_file > $temp_file
-    mv $temp_file $tracks_file
-    echo
-    add_record_tracks
+      grep -v "^${cdcatnum}," $tracks_file > $temp_file
+      mv $temp_file $tracks_file
+      echo
+      add_record_tracks
     }
    fi
 return
@@ -214,12 +214,12 @@ remove_records() {
   if [ -n "$cdcatnum" ]; then
     echo "You are about to delete $cdtitle"
     get_confirm && {
-    grep -v "^${cdcatnum}," $title_file > $temp_file
-    mv $temp_file $title_file
-    grep -v "^${cdcatnum}," $tracks_file > $temp_file
-    mv $temp_file $tracks_file
-    cdcatnum=""
-    echo Entry removed
+      grep -v "^${cdcatnum}," $title_file > $temp_file
+      mv $temp_file $title_file
+      grep -v "^${cdcatnum}," $tracks_file > $temp_file
+      mv $temp_file $tracks_file
+      cdcatnum=""
+      echo Entry removed
     }
     get_return
   fi
