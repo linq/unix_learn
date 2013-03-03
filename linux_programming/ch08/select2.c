@@ -21,9 +21,8 @@ int main(int argc, const char *argv[])
     if (res) {
       printf("select error: %s\n", mysql_error(&my_connection));
     } else {
-      res_ptr = mysql_store_result(&my_connection);
+      res_ptr = mysql_use_result(&my_connection);
       if (res_ptr) {
-        printf("Retrived %lu rows\n", (unsigned long)mysql_num_rows(res_ptr));
         while ((sqlrow = mysql_fetch_row(res_ptr))) {
           printf("Fetched data ...\n");
         }
@@ -33,7 +32,7 @@ int main(int argc, const char *argv[])
         mysql_free_result(res_ptr);
       }
     }
-      mysql_close(&my_connection);
+    mysql_close(&my_connection);
   } else {
     fprintf(stderr, "Connection failed\n");
     if (mysql_errno(&my_connection)) {

@@ -7,6 +7,8 @@ MYSQL my_connection;
 MYSQL_RES *res_ptr;
 MYSQL_ROW sqlrow;
 
+void display_row();
+
 int main(int argc, const char *argv[])
 {
   int res;
@@ -21,11 +23,11 @@ int main(int argc, const char *argv[])
     if (res) {
       printf("select error: %s\n", mysql_error(&my_connection));
     } else {
-      res_ptr = mysql_store_result(&my_connection);
+      res_ptr = mysql_use_result(&my_connection);
       if (res_ptr) {
-        printf("Retrived %lu rows\n", (unsigned long)mysql_num_rows(res_ptr));
         while ((sqlrow = mysql_fetch_row(res_ptr))) {
           printf("Fetched data ...\n");
+          display_row();
         }
         if (mysql_errno(&my_connection)) {
           fprintf(stderr, "Retrived error: %s\n", mysql_error(&my_connection));
@@ -33,7 +35,7 @@ int main(int argc, const char *argv[])
         mysql_free_result(res_ptr);
       }
     }
-      mysql_close(&my_connection);
+    mysql_close(&my_connection);
   } else {
     fprintf(stderr, "Connection failed\n");
     if (mysql_errno(&my_connection)) {
@@ -43,4 +45,15 @@ int main(int argc, const char *argv[])
   }
 
   return 0;
+}
+
+void display_row() {
+  unsigned int field_count;
+
+  field_count = 0;
+  while (field_count < mysql_field_count(&my_connection)) {
+    printf("%s\n", sqlrow[field_count]);
+    field_count++;
+  }
+  printf("\n");
 }
