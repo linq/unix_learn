@@ -15,7 +15,7 @@ typedef struct {
 
 typedef struct {
   char catalog[TRACK_CAT_LEN + 1];
-  int track_info;
+  int track_no;
   char track_txt[TRACK_TTEXT_LEN + 1];
 } cdt_entry;
 
