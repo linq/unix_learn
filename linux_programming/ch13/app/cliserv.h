@@ -18,7 +18,8 @@ typedef enum {
   s_add_cdc_entry,
   s_add_cdt_entry,
   s_del_cdc_entry,
-  s_del_cdt_entry
+  s_del_cdt_entry,
+  s_find_cdc_entry
 } client_request_e;
 
 typedef enum {
