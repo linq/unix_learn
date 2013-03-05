@@ -79,7 +79,7 @@ cdc_entry get_cdc_entry(const char *cd_catalog_ptr) {
 
 cdt_entry get_cdt_entry(const char *cd_catalog_prt, const int track_no) {
   cdt_entry entry_to_return;
-  char entry_to_find[CAT_CAT_LEN + 1];
+  char entry_to_find[CAT_CAT_LEN + 10];
   datum local_data_datum;
   datum local_key_datum;
 

@@ -3,7 +3,7 @@ all: application
 CC=clang
 INCLUDE=/usr/include/gdbm
 LIBS=gdbm_compat -lgdbm
-CFLAGS=-W
+CFLAGS=-W -g
 
 app_ui.o: app_ui.c cd_data.h
 	$(CC) $(CFLAGS) -c app_ui.c

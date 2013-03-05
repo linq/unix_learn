@@ -142,7 +142,7 @@ static menu_options show_menu(const cdc_entry *cdc_selected) {
           option_chosen = mo_add_tracks;
           break;
         case '5':
-          option_chosen = mo_del_tracks;
+          option_chosen = mo_del_cat;
           break;
         case '6':
           option_chosen = mo_list_cat_tracks;
