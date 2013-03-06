@@ -12,7 +12,7 @@ int main(int argc, const char *argv[])
   int res;
 
   mysql_init(&my_connection);
-  if (mysql_real_connect(&my_connection, "localhsot", "linq", "linq", "rick", 0, NULL, 0)) {
+  if (mysql_real_connect(&my_connection, "localhost", "linq", "linq", "rick", 0, NULL, 0)) {
     printf("Connection success\n");
 
     res = mysql_query(&my_connection,

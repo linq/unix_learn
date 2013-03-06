@@ -16,7 +16,7 @@ int main(int argc, const char *argv[])
   int first_row = 1;
 
   mysql_init(&my_connection);
-  if (mysql_real_connect(&my_connection, "localhsot", "linq", "linq", "rick", 0, NULL, 0)) {
+  if (mysql_real_connect(&my_connection, "localhost", "linq", "linq", "rick", 0, NULL, 0)) {
     printf("Connection success\n");
 
     res = mysql_query(&my_connection,
@@ -57,8 +57,8 @@ void display_header() {
 
   printf("Column details:\n");
   while ((field_ptr = mysql_fetch_field(res_ptr)) != NULL) {
-    printtf("\t Name: %s\n", field_ptr->name);
-    printf("\t Type: \n");
+    printf("\t Name: %s\n", field_ptr->name);
+    printf("\t Type: ");
     if (IS_NUM(field_ptr->type)) {
       printf("Numberic field\n");
     } else {
