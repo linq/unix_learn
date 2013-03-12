@@ -29,12 +29,12 @@ typedef enum {
 } server_response_e;
 
 typedef struct {
-  pit_t client_pid;
+  pid_t client_pid;
   client_request_e request;
   server_response_e response;
   cdc_entry cdc_entry_data;
   cdt_entry cdt_entry_data;
-  char error_text[ERR_TEXT_LEN + 1]''
+  char error_text[ERR_TEXT_LEN + 1];
 } message_db_t;
 
 int server_starting(void);
@@ -46,7 +46,7 @@ void end_resp_to_client(void);
 
 int client_starting(void);
 void client_ending(void);
-int send_mess_to_server(void);
+int send_mess_to_server(message_db_t mess_to_send);
 int start_resp_from_server(void);
 int read_resp_from_server(message_db_t *rec_ptr);
 void end_resp_from_server(void);

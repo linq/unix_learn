@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #include "cd_data.h"
 #include "cliserv.h"
@@ -38,7 +39,7 @@ cdc_entry get_cdc_entry(const char *cd_catalog_ptr) {
   if (send_mess_to_server(mess_send)) {
     if (read_one_response(&mess_ret)) {
       if (mess_ret.response == r_success) {
-        ret_val = mess_ret.cdt_entry_data;
+        ret_val = mess_ret.cdc_entry_data;
       } else {
         fprintf(stderr, "%s", mess_ret.error_text);
       }
@@ -99,11 +100,11 @@ int add_cdc_entry(const cdc_entry entry_to_add) {
 
   mess_send.client_pid = mypid;
   mess_send.request = s_add_cdc_entry;
-  mess_e.cdc_entry_data = entry_to_add;
+  mess_ret.cdc_entry_data = entry_to_add;
 
   if (send_mess_to_server(mess_send)) {
     if (read_one_response(&mess_ret)) {
-      if (mess_ret.respond == r_success) {
+      if (mess_ret.response == r_success) {
         return 1;
       } else {
         fprintf(stderr, "%s", mess_ret.error_text);
@@ -128,7 +129,7 @@ int add_cdt_entry(const cdt_entry entry_to_add) {
 
   if (send_mess_to_server(mess_send)) {
     if (read_one_response(&mess_ret)) {
-      if (mess_ret.response = r_success) {
+      if (mess_ret.response == r_success) {
         return 1;
       } else {
         fprintf(stderr, "%s", mess_ret.error_text);
@@ -179,7 +180,7 @@ int del_cdt_entry(const char *cd_catalog_ptr, const int track_no) {
 
   if (send_mess_to_server(mess_send)) {
     if (read_one_response(&mess_ret)) {
-      if (mess_ret.respond = r_success) {
+      if (mess_ret.response == r_success) {
         return 1;
       } else {
         fprintf(stderr, "%s", mess_ret.error_text);
@@ -216,12 +217,14 @@ cdc_entry search_cdc_entry(const char *cd_catalog_ptr, int *first_call_ptr) {
     strcpy(mess_send.cdc_entry_data.catalog, cd_catalog_ptr);
 
     if (send_mess_to_server(mess_send)) {
-      if (start_resp_from_server(&mess_ret)) {
-        if (mess_ret.response = r_success) {
-          fwrite(&mess_ret.cdc_entry_data, sizeof(cdc_entry_data), 1, work_file);
-          entries_matching++;
-        } else {
-          break;
+      if (start_resp_from_server()) {
+        while (read_resp_from_server(&mess_ret)) {
+          if (mess_ret.response == r_success) {
+            fwrite(&mess_ret.cdc_entry_data, sizeof(cdc_entry), 1, work_file);
+            entries_matching++;
+          } else {
+            break;
+          }
         }
       } else {
         fprintf(stderr, "Server not responding\n");

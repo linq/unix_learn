@@ -106,7 +106,7 @@ static void process_command(const message_db_t comm) {
         resp.response = r_failure;
       break;
     case s_del_cdt_entry:
-      if (!del_cdt_entry(comm.catalog, comm.cdt_entry_data.track_no))
+      if (!del_cdt_entry(comm.cdt_entry_data.catalog, comm.cdt_entry_data.track_no))
         resp.response = r_failure;
       break;
     case s_find_cdc_entry:
